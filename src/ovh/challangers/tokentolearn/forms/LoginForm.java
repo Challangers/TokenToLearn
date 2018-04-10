@@ -28,7 +28,7 @@ public class LoginForm {
             return new User();
         }
         // retrieve user from database
-        User user = DaoFactory.getInstance().datastore().createQuery(User.class).field("id").equal(mail).get();
+        User user = DaoFactory.getDatastore().createQuery(User.class).field("id").equal(mail).get();
 
         if (!(user == null) && user.getPassword().equals(HashPass.hashPassword(password)))
             return user;
