@@ -72,4 +72,7 @@ public class Project {
     public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
+
+    public void addGroups(Group group) { this.groups.add(group); }
+
 }

@@ -22,7 +22,7 @@ public class ConnectionServlet extends GenericServlet {
         // try log in user
         User user = LoginForm.loginUser(request);
 
-        if (!(user == null)) {
+        if (user != null) {
             // register user in session and redirect to welcome servlet
             request.getSession().setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/index.jsp"); // changer par la redirection necessaire
