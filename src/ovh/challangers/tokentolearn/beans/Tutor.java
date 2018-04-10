@@ -7,6 +7,7 @@ import java.util.Queue;
 @Entity("tutor")
 public class Tutor {
     @Reference
+    @Id
     private User user;
 
     @Reference

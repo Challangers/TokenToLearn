@@ -6,25 +6,18 @@ import org.mongodb.morphia.Morphia;
 
 public class DaoFactory {
 
-    private static final String DB_URL = "mongodb://localhost:9003/";
+    private static final String DB_URL = "51.255.173.143";
 
     private static final Morphia morphia = new Morphia();
-    private static DaoFactory instance;
+    private static final int DB_PORT = 27017;
+    private static Datastore datastore;
 
-
-
-    public static DaoFactory getInstance() {
-        // create the Datastore connecting to the default port on the local host
-        if (instance == null){
-            instance = new DaoFactory();
+    public static Datastore getDatastore() {
+        if(datastore == null){
             morphia.mapPackage("ovh.challangers.tokentolearn.beans");
+            datastore = morphia.createDatastore(new MongoClient(DB_URL, DB_PORT), "tokentolearn");
+            datastore.ensureIndexes();
         }
-        return instance;
-    }
-
-    public Datastore datastore() {
-        final Datastore datastore = morphia.createDatastore(new MongoClient(), "tokentolearn");
-        datastore.ensureIndexes();
         return datastore;
     }
 

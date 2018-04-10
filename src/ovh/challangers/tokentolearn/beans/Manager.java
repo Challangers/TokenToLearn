@@ -5,6 +5,7 @@ import org.mongodb.morphia.annotations.*;
 @Entity("manager")
 public class Manager {
     @Reference
+    @Id
     private User user;
 
     public User getUser() {
