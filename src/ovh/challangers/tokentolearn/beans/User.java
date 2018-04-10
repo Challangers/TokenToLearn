@@ -1,6 +1,13 @@
 package ovh.challangers.tokentolearn.beans;
 
+import org.mongodb.morphia.annotations.*;
+
+@Entity("user")
+@Indexes(
+        @Index(value = "id", fields = @Field("id"))
+)
 public class User {
+    @Id
     private String id;
     private String password;
     private UserType type;

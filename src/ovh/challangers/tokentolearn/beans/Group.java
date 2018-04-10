@@ -1,9 +1,18 @@
 package ovh.challangers.tokentolearn.beans;
 
+import org.mongodb.morphia.annotations.*;
+
 import java.util.List;
 
+@Entity("group")
+@Indexes(
+        @Index(value = "groupId", fields = @Field("groupId"))
+)
 public class Group {
+    @Id
     private String groupId;
+
+    @Reference
     private List<Student> groupStudent;
     private int token;
 

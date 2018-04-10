@@ -1,12 +1,25 @@
 package ovh.challangers.tokentolearn.beans;
 
+import org.mongodb.morphia.annotations.*;
+
 import java.util.List;
 
+@Entity("project")
+@Indexes(
+        @Index(value = "id", fields = @Field("id"))
+)
 public class Project {
+    @Id
     private String id;
     private int initialToken;
+
+    @Reference
     private Manager owner;
-    private Tutor tutors;
+
+    @Reference
+    private List<Tutor> tutors;
+
+    @Reference
     private List<Tag> tags;
 
     public String getId() {
@@ -33,11 +46,11 @@ public class Project {
         this.owner = owner;
     }
 
-    public Tutor getTutors() {
+    public List<Tutor> getTutors() {
         return tutors;
     }
 
-    public void setTutors(Tutor tutors) {
+    public void setTutors(List<Tutor> tutors) {
         this.tutors = tutors;
     }
 

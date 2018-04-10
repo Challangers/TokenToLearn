@@ -1,11 +1,20 @@
 package ovh.challangers.tokentolearn.beans;
 
+import org.mongodb.morphia.annotations.*;
+
 import java.util.Queue;
 
+@Entity("tutor")
 public class Tutor {
+    @Reference
     private User user;
+
+    @Reference
     private Tag tag;
+
     private Status status;
+
+    @Reference
     private Queue<Student> waitingQueue;
     private int tokens;
 
