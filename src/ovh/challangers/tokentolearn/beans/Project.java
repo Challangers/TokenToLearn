@@ -22,6 +22,9 @@ public class Project {
     @Reference
     private List<Tag> tags;
 
+    @Reference
+    private List<Group> groups;
+
     public String getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class Project {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

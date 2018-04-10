@@ -1,6 +1,8 @@
 package ovh.challangers.tokentolearn.forms;
 
 import ovh.challangers.tokentolearn.beans.User;
+import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
+import ovh.challangers.tokentolearn.misc.HashPass;
 import ovh.challangers.tokentolearn.misc.ServletUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,17 +24,17 @@ public class LoginForm {
         String mail = ServletUtil.retrieveValue(request, "id");
         String password = ServletUtil.retrieveValue(request, "password");
 
-        if (mail.isEmpty() || password.isEmpty())
+        if (mail.isEmpty() || password.isEmpty()) {
             return new User();
-
+        }
         // retrieve user from database
-        User user = new User();
+        User user = DaoFactory.getInstance().datastore().createQuery(User.class).field("id").equal(mail).get();
 
-//        if (!(user == null) && user.getPassword().equals(HashPass.hashPassword(password)))
-        return user;
-//        else {
-        //LogManager.getLogger(LoginForm.class).error(mail + " --> mot de passe incorrect : " + password);
-//            return new User();
-//        }
+        if (!(user == null) && user.getPassword().equals(HashPass.hashPassword(password)))
+            return user;
+        else {
+//        LogManager.getLogger(LoginForm.class).error(mail + " --> mot de passe incorrect : " + password);
+            return new User();
+        }
     }
 }
