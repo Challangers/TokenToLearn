@@ -23,8 +23,7 @@ public class ProjectCreationServlet extends GenericServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
 
         if(user.getType() != UserType.MANAGER) return;
 

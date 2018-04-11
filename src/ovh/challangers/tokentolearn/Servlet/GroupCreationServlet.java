@@ -23,12 +23,20 @@ public class GroupCreationServlet extends GenericServlet {
         super.doPost(request, response);
 
         Datastore datastore = DaoFactory.getDatastore();
+        User user = (User) request.getSession().getAttribute("user");
+
+        Student student = (Student) datastore
+                .createQuery(Student.class)
+                .field("user")
+                .equal(user);
 
         List<Student> students = datastore
                 .createQuery(Student.class)
                 .field("user")
                 .in(Arrays.asList(request.getParameterValues("students")))
                 .asList();
+
+        students.add(student);
 
         Project project = datastore
                 .createQuery(Project.class)
@@ -40,10 +48,15 @@ public class GroupCreationServlet extends GenericServlet {
         group.setGroupid(request.getParameter("name"));
         group.setGroupStudent(students);
         group.setToken(project.getInitialToken());
+        datastore.save(group);
         UpdateOperations<Project> updateProject = DaoFactory.getDatastore().createUpdateOperations(Project.class)
                 .addToSet("groups", group);
-
-        datastore.save(group);
         datastore.update(project, updateProject);
+
+        for(Student stu:students){
+            UpdateOperations<Student> updateStudent = DaoFactory.getDatastore().createUpdateOperations(Student.class)
+                    .addToSet("projects", project);
+            datastore.update(stu, updateStudent);
+        }
     }
 }
