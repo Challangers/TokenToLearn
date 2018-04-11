@@ -2,7 +2,8 @@ package ovh.challangers.tokentolearn.beans;
 
 import org.mongodb.morphia.annotations.*;
 
-import java.util.Map;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity("tutor")
 public class Tutor {
@@ -15,8 +16,8 @@ public class Tutor {
 
     private Status status;
 
-    @Reference
-    private Map<Project, Intervention> waitingQueue;
+    @Embedded
+    private List<WaitingQueue> waitingQueue;
     private int tokens;
 
     public User getUser() {
@@ -43,11 +44,27 @@ public class Tutor {
         this.status = status;
     }
 
-    public Map<Project, Intervention> getWaitingqueue() {
+    public List<WaitingQueue> getWaitingqueue() {
         return waitingQueue;
     }
 
-    public void setWaitingqueue(Map<Project, Intervention> waitingqueue) {
+    public WaitingQueue popNext(Canal canal) {
+        boolean found = false;
+        Iterator<WaitingQueue> iterQueue = waitingQueue.iterator();
+        while(!found){
+            if(iterQueue.hasNext()){
+                WaitingQueue next = iterQueue.next();
+                if(canal == Canal.ANY || next.value.canal == canal){
+                    waitingQueue.remove(next);
+
+                    return next;
+                }
+            }else found = true;
+        }
+        return null;
+    }
+
+    public void setWaitingqueue(List<WaitingQueue> waitingqueue) {
         this.waitingQueue = waitingqueue;
     }
 
@@ -57,5 +74,10 @@ public class Tutor {
 
     public void setTokens(int tokens) {
         this.tokens = tokens;
+    }
+
+    public class WaitingQueue {
+        public Project key;
+        public Intervention value;
     }
 }

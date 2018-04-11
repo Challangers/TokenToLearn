@@ -4,4 +4,5 @@ public enum Canal {
     DISCORD,
     DIRECT,
     OTHER,
+    ANY
 }
