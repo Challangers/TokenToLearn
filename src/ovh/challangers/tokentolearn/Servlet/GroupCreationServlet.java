@@ -52,5 +52,7 @@ public class GroupCreationServlet extends GenericServlet {
         UpdateOperations<Project> updateProject = DaoFactory.getDatastore().createUpdateOperations(Project.class)
                 .addToSet("groups", group);
         datastore.update(project, updateProject);
+        response.sendRedirect(request.getContextPath() + "/tokenMain.jsp");
+        return;
     }
 }

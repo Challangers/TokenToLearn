@@ -62,5 +62,6 @@ public class GetUserProjectServlet extends GenericServlet {
 
         request.setAttribute("projects", projects);
         request.getRequestDispatcher("/projectChooser.jsp").forward(request, response);
+        return;
     }
 }

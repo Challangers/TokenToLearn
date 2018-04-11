@@ -65,5 +65,7 @@ public class ProjectCreationServlet extends GenericServlet {
                     .addToSet("projects", project);
             datastore.update(stu, updateStudent);
         }
+        response.sendRedirect(request.getContextPath() + "/tokenMain.jsp");
+        return;
     }
 }
