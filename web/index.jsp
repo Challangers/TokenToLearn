@@ -5,7 +5,7 @@
 
     <title>TokenToLearn</title>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="CSS/W3.css"/>
 </head>
 
 <body>
