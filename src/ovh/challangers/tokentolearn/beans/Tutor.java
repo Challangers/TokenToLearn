@@ -76,8 +76,11 @@ public class Tutor {
         this.tokens = tokens;
     }
 
-    public class WaitingQueue {
+    public static class WaitingQueue {
         public Project key;
         public Intervention value;
+
+        public WaitingQueue() {
+        }
     }
 }
