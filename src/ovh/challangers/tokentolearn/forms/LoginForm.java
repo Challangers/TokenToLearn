@@ -21,11 +21,11 @@ public class LoginForm {
      */
     public static User loginUser(HttpServletRequest request) {
         // retrieve data from login form
-        String mail = ServletUtil.retrieveValue(request, "id");
+        String mail = ServletUtil.retrieveValue(request, "mail");
         String password = ServletUtil.retrieveValue(request, "password");
 
         if (mail.isEmpty() || password.isEmpty()) {
-            return new User();
+            return null;
         }
         // retrieve user from database
         User user = DaoFactory.getDatastore().createQuery(User.class).field("id").equal(mail).get();
@@ -34,7 +34,7 @@ public class LoginForm {
             return user;
         else {
 //        LogManager.getLogger(LoginForm.class).error(mail + " --> mot de passe incorrect : " + password);
-            return new User();
+            return null;
         }
     }
 }

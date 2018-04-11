@@ -25,7 +25,7 @@ public class ConnectionServlet extends GenericServlet {
         if (user != null) {
             // register user in session and redirect to welcome servlet
             request.getSession().setAttribute("user", user);
-            response.sendRedirect(request.getContextPath() + "/index.jsp"); // changer par la redirection necessaire
+            response.sendRedirect(request.getContextPath() + "/tokenMain.jsp"); // changer par la redirection necessaire
         } else {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }

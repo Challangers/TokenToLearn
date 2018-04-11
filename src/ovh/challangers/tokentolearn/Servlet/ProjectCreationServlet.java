@@ -1,6 +1,7 @@
 package ovh.challangers.tokentolearn.Servlet;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.UpdateOperations;
 import ovh.challangers.tokentolearn.beans.*;
 import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
 
@@ -23,8 +24,7 @@ public class ProjectCreationServlet extends GenericServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
 
         if(user.getType() != UserType.MANAGER) return;
 
@@ -54,5 +54,16 @@ public class ProjectCreationServlet extends GenericServlet {
         project.setTutors(tutors);
 
         datastore.save(project);
+
+        List<Student> students = datastore
+                .createQuery(Student.class)
+                .field("user")
+                .in(Arrays.asList(request.getParameterValues("students")))
+                .asList();
+        for(Student stu:students){
+            UpdateOperations<Student> updateStudent = DaoFactory.getDatastore().createUpdateOperations(Student.class)
+                    .addToSet("projects", project);
+            datastore.update(stu, updateStudent);
+        }
     }
 }
