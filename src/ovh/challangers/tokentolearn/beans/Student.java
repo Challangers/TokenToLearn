@@ -22,4 +22,8 @@ public class Student {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
 }

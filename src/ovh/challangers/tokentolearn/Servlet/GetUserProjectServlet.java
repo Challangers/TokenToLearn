@@ -1,21 +1,16 @@
 package ovh.challangers.tokentolearn.Servlet;
 
 import org.mongodb.morphia.Datastore;
-import ovh.challangers.tokentolearn.beans.Group;
-import ovh.challangers.tokentolearn.beans.Project;
-import ovh.challangers.tokentolearn.beans.User;
-import ovh.challangers.tokentolearn.beans.UserType;
+import ovh.challangers.tokentolearn.beans.*;
 import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Servlet to chose a project
@@ -32,25 +27,38 @@ public class GetUserProjectServlet extends GenericServlet {
             return;
         }
         User user = (User) request.getSession().getAttribute("user");
-        // à voir
-        if(user.getType()== UserType.TUTOR) return;
-
-
         Datastore datastore = DaoFactory.getDatastore();
+        List<Project> projects = new ArrayList<>();
 
-        List<Group> groups = datastore
-                .createQuery(Group.class)
-                .field("groupStudent")
-                .contains(user.getId())
-                .asList();
-        //TODO
-        //modifier liste des projets
-        List<Project> projects = datastore
-                .createQuery(Project.class)
-                .field("id")
-                .in(Arrays.asList(request.getParameterValues("project")))
-                .asList();
+        if(user.getType()== UserType.TUTOR){
+            projects = datastore
+                    .createQuery(Project.class)
+                    .field("tutors")
+                    .contains(user.getId())
+                    .asList();
+        }
 
+        if(user.getType()== UserType.MANAGER){
+            Manager manager = (Manager) datastore
+                    .createQuery(Manager.class)
+                    .field("user")
+                    .equal(user);
+
+            projects = datastore
+                    .createQuery(Project.class)
+                    .field("owner")
+                    .equal(manager)
+                    .asList();
+        }
+
+        if(user.getType()== UserType.STUDENT){
+            Student student = (Student) datastore
+                    .createQuery(Student.class)
+                    .field("user")
+                    .equal(user);
+
+            projects = student.getProjects();
+        }
 
         request.setAttribute("projects", projects);
         request.getRequestDispatcher("/projectChooser.jsp").forward(request, response);
