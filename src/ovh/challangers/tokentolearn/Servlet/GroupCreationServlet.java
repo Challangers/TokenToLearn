@@ -52,11 +52,5 @@ public class GroupCreationServlet extends GenericServlet {
         UpdateOperations<Project> updateProject = DaoFactory.getDatastore().createUpdateOperations(Project.class)
                 .addToSet("groups", group);
         datastore.update(project, updateProject);
-
-        for(Student stu:students){
-            UpdateOperations<Student> updateStudent = DaoFactory.getDatastore().createUpdateOperations(Student.class)
-                    .addToSet("projects", project);
-            datastore.update(stu, updateStudent);
-        }
     }
 }
