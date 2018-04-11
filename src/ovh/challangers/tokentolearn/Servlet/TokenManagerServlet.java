@@ -34,7 +34,10 @@ public class TokenManagerServlet extends HttpServlet {
                 Group group = DaoFactory.getDatastore().createQuery(Group.class)
                         .field("id").equal(groupId)
                         .get();
+
                 if(group != null){
+                    tokenSpent = group.getToken()-tokenSpent < 0 ? group.getToken() : tokenSpent;
+
                     UpdateOperations<Group> addToken = DaoFactory.getDatastore().createUpdateOperations(Group.class)
                             .inc("token", tokenSpent);
 

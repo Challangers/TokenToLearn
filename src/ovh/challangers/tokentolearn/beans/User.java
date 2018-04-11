@@ -2,6 +2,8 @@ package ovh.challangers.tokentolearn.beans;
 
 import org.mongodb.morphia.annotations.*;
 
+import java.util.List;
+
 @Entity("user")
 @Indexes(
         @Index(value = "id", fields = @Field("id"))

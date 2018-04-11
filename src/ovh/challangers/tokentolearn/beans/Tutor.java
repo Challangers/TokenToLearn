@@ -2,7 +2,7 @@ package ovh.challangers.tokentolearn.beans;
 
 import org.mongodb.morphia.annotations.*;
 
-import java.util.Queue;
+import java.util.Map;
 
 @Entity("tutor")
 public class Tutor {
@@ -16,7 +16,7 @@ public class Tutor {
     private Status status;
 
     @Reference
-    private Queue<Student> waitingQueue;
+    private Map<Project, Intervention> waitingQueue;
     private int tokens;
 
     public User getUser() {
@@ -43,11 +43,11 @@ public class Tutor {
         this.status = status;
     }
 
-    public Queue<Student> getWaitingqueue() {
+    public Map<Project, Intervention> getWaitingqueue() {
         return waitingQueue;
     }
 
-    public void setWaitingqueue(Queue<Student> waitingqueue) {
+    public void setWaitingqueue(Map<Project, Intervention> waitingqueue) {
         this.waitingQueue = waitingqueue;
     }
 
