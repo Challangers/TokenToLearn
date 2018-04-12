@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Servlet for create a new project
@@ -50,7 +51,7 @@ public class ProjectCreationServlet extends GenericServlet {
         project.setId(request.getParameter("name"));
         project.setInitialToken(Integer.parseInt(request.getParameter("initialToken")));
         project.setTags(tags);
-        project.setTutors(tutors);
+        project.setTutors(tutors.stream().map(Tutor::getUser).collect(Collectors.toList()));
 
         datastore.save(project);
 

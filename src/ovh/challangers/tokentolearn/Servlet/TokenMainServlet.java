@@ -4,6 +4,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import ovh.challangers.tokentolearn.beans.*;
 import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
+import ovh.challangers.tokentolearn.misc.JspHelper;
 import ovh.challangers.tokentolearn.misc.ServletUtil;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,17 @@ public class TokenMainServlet extends GenericServlet{
         Datastore datastore = DaoFactory.getDatastore();
         User user = (User) request.getSession().getAttribute("user");
         String projectName = request.getParameter("id");
-
+        Project project;
+        if(JspHelper.getSessionObject(request, "project") != null) //Hope that the project is available
+            project = JspHelper.getSessionObject(request, "project");
+        else {
+            project = datastore
+                    .createQuery(Project.class)
+                    .field("id")
+                    .equal(projectName)
+                    .get();
+            request.getSession().setAttribute("project", project);
+        }
         if(user.getType()== UserType.STUDENT){
             List<Group> groups = datastore
                     .createQuery(Group.class)
@@ -33,11 +44,7 @@ public class TokenMainServlet extends GenericServlet{
                     .equal(user)
                     .asList();
 
-            Project project = datastore
-                    .createQuery(Project.class)
-                    .field("id")
-                    .equal(projectName)
-                    .get();
+
 
             List<Group> allGroup = project.getGroups();
             Group studentGroup = new Group();
@@ -54,6 +61,7 @@ public class TokenMainServlet extends GenericServlet{
             request.setAttribute("groupStudent", studentGroup);
             request.setAttribute("tutors", project.getTutors());
             request.setAttribute("tags", project.getTags());
+            request.getSession().setAttribute("group", studentGroup);
             request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
             return;
         }

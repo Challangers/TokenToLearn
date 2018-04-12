@@ -1,6 +1,7 @@
 package ovh.challangers.tokentolearn.Servlet;
 
-import ovh.challangers.tokentolearn.beans.User;
+import ovh.challangers.tokentolearn.beans.*;
+import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
 import ovh.challangers.tokentolearn.forms.LoginForm;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet for connection

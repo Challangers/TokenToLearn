@@ -31,13 +31,9 @@
             <li id="projectName" name="projectName"><a href="${pageContext.request.contextPath}/tokenMain?id=<%= p.getId() %>"> <%= p.getId() %> </a> </li>
     <% } %>
     </ul>
-    <ul class="w3-ul w3-xlarge">
-        <li>Projet 1</li>
-        <li>Projet 2</li>
-        <li>Projet 3</li>
-    </ul>
     <div  class="w3-container w3-cell-bottom">
         <div class="w3-container w3-right">
+            <%--<% if(pageContext.getRequest().getAttribute("user"))%>--%>
         <button class="w3-button w3-circle w3-amber">+</button>
         <button class="w3-button w3-circle w3-black">-</button>
         </div>

@@ -2,8 +2,10 @@ package ovh.challangers.tokentolearn.beans;
 
 import org.mongodb.morphia.annotations.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Entity("tutor")
 public class Tutor {
@@ -45,21 +47,21 @@ public class Tutor {
     }
 
     public List<WaitingQueue> getWaitingqueue() {
-        return waitingQueue;
+        return waitingQueue == null ? new ArrayList<>() : waitingQueue;
     }
 
     public WaitingQueue popNext(Canal canal) {
         boolean found = false;
         Iterator<WaitingQueue> iterQueue = waitingQueue.iterator();
-        while(!found){
-            if(iterQueue.hasNext()){
+        while (!found) {
+            if (iterQueue.hasNext()) {
                 WaitingQueue next = iterQueue.next();
-                if(canal == Canal.ANY || next.value.canal == canal){
+                if (canal == Canal.ANY || next.value.canal == canal) {
                     waitingQueue.remove(next);
 
                     return next;
                 }
-            }else found = true;
+            } else found = true;
         }
         return null;
     }
@@ -77,10 +79,22 @@ public class Tutor {
     }
 
     public static class WaitingQueue {
+        @Id
+        @Reference
         public Project key;
+
+        @Reference
         public Intervention value;
 
         public WaitingQueue() {
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            WaitingQueue that = (WaitingQueue) o;
+            return Objects.equals(key, that.key);
         }
     }
 }

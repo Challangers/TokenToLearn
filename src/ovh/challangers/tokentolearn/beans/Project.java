@@ -17,7 +17,7 @@ public class Project {
     private Manager owner;
 
     @Reference
-    private List<Tutor> tutors;
+    private List<User> tutors;
 
     @Reference
     private List<Tag> tags;
@@ -49,13 +49,6 @@ public class Project {
         this.owner = owner;
     }
 
-    public List<Tutor> getTutors() {
-        return tutors;
-    }
-
-    public void setTutors(List<Tutor> tutors) {
-        this.tutors = tutors;
-    }
 
     public List<Tag> getTags() {
         return tags;
@@ -75,4 +68,11 @@ public class Project {
 
     public void addGroups(Group group) { this.groups.add(group); }
 
+    public List<User> getTutors() {
+        return tutors;
+    }
+
+    public void setTutors(List<User> tutors) {
+        this.tutors = tutors;
+    }
 }

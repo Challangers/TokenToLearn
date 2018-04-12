@@ -39,4 +39,9 @@ public class Group {
     public void setGroupStudent(List<User> groupStudent) {
         this.groupStudent = groupStudent;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Group && groupId.equals(((Group)obj).groupId);
+    }
 }

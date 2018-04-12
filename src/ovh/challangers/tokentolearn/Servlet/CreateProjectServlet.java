@@ -5,7 +5,6 @@ import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
 import ovh.challangers.tokentolearn.misc.JspHelper;
 import ovh.challangers.tokentolearn.misc.ServletUtil;
 
-import javax.print.DocFlavor;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

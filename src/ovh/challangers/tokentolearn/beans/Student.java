@@ -8,8 +8,8 @@ import java.util.List;
 
 @Entity("student")
 public class Student {
-    @Reference
     @Id
+    @Reference
     private User user;
 
     @Reference

@@ -36,18 +36,23 @@ public class GoInterventionServlet extends HttpServlet {
                     Tutor tutor = DaoFactory.getDatastore().find(Tutor.class)
                             .field("user").equal(
                                     DaoFactory.getDatastore().find(User.class)
-                                            .field("id").equal(request.getParameter("tutor"))
+                                            .field("id").equal(request.getParameter("tutor")).get()
                             ).get(); // Tutor requested
 
                     Intervention interv = new Intervention();
+                    Tutor.WaitingQueue waitingQueue = new Tutor.WaitingQueue();
                     interv.group = group;
+                    interv.groupId = group.getGroupid();
                     interv.canal = Canal.values()[Integer.parseInt(request.getParameter("canal"))];
                     if (interv.canal == null) throw new InvalidParameterException();
+
+                    waitingQueue.value = interv;
+                    waitingQueue.key = JspHelper.getSessionObject(request, "project");
 
                     DaoFactory.getDatastore().save(interv);
                     DaoFactory.getDatastore().update(tutor,
                             DaoFactory.getDatastore().createUpdateOperations(Tutor.class)
-                                    .addToSet("waitingQueue", interv)
+                                    .addToSet("waitingQueue", waitingQueue)
                     );
                 }
                 break;
@@ -67,8 +72,9 @@ public class GoInterventionServlet extends HttpServlet {
                     //        tutor.getWaitingqueue().get()
                     //}
                 }
-
         }
+        response.sendRedirect(request.getContextPath() + "/tokenMain");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
