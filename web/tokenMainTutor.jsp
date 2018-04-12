@@ -18,6 +18,7 @@
 
 </head>
 <body>
+<% Tutor tuts = (Tutor) pageContext.getRequest().getAttribute("tutor");%>
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
         <% User user = (User) pageContext.getRequest().getAttribute("user");%>
             <% List<Project> projects = (List<Project>) pageContext.getRequest().getAttribute("projects") ; %>
@@ -31,12 +32,14 @@
 </div>
 <div style="margin-left:25%">
     <div class="w3-container">
-            <% Tutor tuts = (Tutor) pageContext.getRequest().getAttribute("tutor");%>
+        <div style="margin-right:25%">
+            <h3>Token restant : <%= tuts.getTokens() %></h3>
+        </div>
         <div class="w3-container w3-amber">
             <button onclick="myFunction('Intervenant1')" class="w3-button w3-block w3-black w3-left-align"><%= user.getId() %></button>
             <div id="Intervenant1" class="w3-hide w3-animate-zoom">
                 <% for (Tutor.WaitingQueue waitingQueue : tuts.getWaitingqueue()) { %>
-                    <span class="w3-button w3-block w3-left-align"><%= waitingQueue.value.group.getGroupid()%></span>
+                    <span class="w3-button w3-block w3-left-align"><%= waitingQueue.value.group.getGroupid()%> (<%= waitingQueue.value.canal.name().toLowerCase() %>)</span>
                 <%}%>
             </div>
         </div>

@@ -64,6 +64,5 @@ public class GetUserProjectServlet extends GenericServlet {
 
         request.setAttribute("projects", projects);
         request.getRequestDispatcher(chemin).forward(request, response);
-        return;
     }
 }

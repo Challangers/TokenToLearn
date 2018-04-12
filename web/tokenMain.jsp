@@ -115,7 +115,6 @@
 
     <!-- Modal content -->
     <div class="modal-content">
-        <span class="close">&times;</span>
         <p>Etes vous sur de vous ajouter à la file d'intervention de <span id="interv"></span> ?</p>
         <span id="close" class="w3-button w3-block w3-left-align">Non &times;</span> <span id="direct"
                                                                                            class="w3-button w3-block w3-left-align">Intervention directe</span>
