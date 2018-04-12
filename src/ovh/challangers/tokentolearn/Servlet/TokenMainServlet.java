@@ -71,7 +71,7 @@ public class TokenMainServlet extends GenericServlet{
             List<Project> projects = datastore
                     .createQuery(Project.class)
                     .field("tutors")
-                    .contains(user.getId())
+                    .equal(user)
                     .asList();
 
             Tutor tutor = (Tutor) datastore
