@@ -54,7 +54,6 @@ public class TokenMainServlet extends GenericServlet{
             request.setAttribute("groupStudent", studentGroup);
             request.setAttribute("tutors", project.getTutors());
             request.setAttribute("tags", project.getTags());
-            request.setAttribute("tags", studentGroup.getToken());
             request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
             return;
         }
@@ -78,6 +77,5 @@ public class TokenMainServlet extends GenericServlet{
         }
 
         request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
-        return;
     }
 }

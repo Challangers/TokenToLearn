@@ -30,30 +30,20 @@ public class CreateProjectServlet extends GenericServlet {
             return;
         }
 
-        if (request.getSession().getAttribute("mode").equals("create")) {
-
-            List<Student> allStudents = DaoFactory.getDatastore().createQuery(Student.class).asList();
-            List<Tag> allTags = DaoFactory.getDatastore().createQuery(Tag.class).asList();
-            List<Tutor> allTutors = DaoFactory.getDatastore().createQuery(Tutor.class).asList();
-
+            List<Student> allStudents = DaoFactory.getDatastore()
+                    .createQuery(Student.class)
+                    .asList();
+            List<Tag> allTags = DaoFactory.getDatastore()
+                    .createQuery(Tag.class)
+                    .asList();
+            List<Tutor> allTutors = DaoFactory.getDatastore()
+                    .createQuery(Tutor.class)
+                    .asList();
 
             request.setAttribute("tutors", allTutors);
             request.setAttribute("tags", allTags);
             request.setAttribute("Students", allStudents);
             request.getRequestDispatcher("/CreateProject.jsp").forward(request, response);
-        } else {
-            Project project = DaoFactory.getDatastore().createQuery(Project.class).field("id").equal(projectName).get();
-            List<Tutor> newTutors = DaoFactory.getDatastore().createQuery(Tutor.class).field("id").notIn(project.getTutors()).asList();
-            List<Student> newStudents = DaoFactory.getDatastore().createQuery(Student.class).field("project").notEqual(project).asList();
-            List<Tag> newTag = DaoFactory.getDatastore().createQuery(Tag.class).field("id").notIn(project.getTags()).asList();
-            int tokens = project.getInitialToken();
 
-            request.setAttribute("newTutors", newTutors);
-            request.setAttribute("newTags", newTag);
-            request.setAttribute("newStudents", newStudents);
-            request.setAttribute("tokens",tokens);
-            request.getRequestDispatcher("/CreateProject.jsp").forward(request, response);
-
-        }
     }
 }
