@@ -29,6 +29,7 @@ public class GetUserProjectServlet extends GenericServlet {
         User user = (User) request.getSession().getAttribute("user");
         Datastore datastore = DaoFactory.getDatastore();
         List<Project> projects = new ArrayList<>();
+        String chemin = "/projectChooser.jsp";
 
         if(user.getType()== UserType.TUTOR){
             projects = datastore
@@ -36,6 +37,7 @@ public class GetUserProjectServlet extends GenericServlet {
                     .field("tutors")
                     .contains(user.getId())
                     .asList();
+            chemin = "/tokenMain";
         }
 
         if(user.getType()== UserType.MANAGER){
@@ -61,7 +63,7 @@ public class GetUserProjectServlet extends GenericServlet {
         }
 
         request.setAttribute("projects", projects);
-        request.getRequestDispatcher("/projectChooser.jsp").forward(request, response);
+        request.getRequestDispatcher(chemin).forward(request, response);
         return;
     }
 }

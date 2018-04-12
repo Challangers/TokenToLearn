@@ -61,6 +61,7 @@ public class TokenMainServlet extends GenericServlet{
             request.setAttribute("groupStudent", studentGroup);
             request.setAttribute("tutors", project.getTutors());
             request.setAttribute("tags", project.getTags());
+            request.setAttribute("user", user);
             request.getSession().setAttribute("group", studentGroup);
             request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
             return;
@@ -76,11 +77,12 @@ public class TokenMainServlet extends GenericServlet{
             Tutor tutor = (Tutor) datastore
                     .createQuery(Tutor.class)
                     .field("user")
-                    .equal(user);
+                    .equal(user).get();
 
             request.setAttribute("projects", projects);
             request.setAttribute("tutor", tutor);
-            request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
+            request.setAttribute("user", tutor.getUser());
+            request.getRequestDispatcher("/tokenMainTutor.jsp").forward(request, response);
             return;
         }
 

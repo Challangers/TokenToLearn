@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<link rel="stylesheet" type="text/css" href="CSS/W3.css"/>
+<link rel="stylesheet" type="text/css" href="css/W3.css"/>
 
 
 <head>
