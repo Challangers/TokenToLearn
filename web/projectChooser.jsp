@@ -18,6 +18,7 @@
 </head>
 <body>
 <form class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
+    <form class="formDisplay" id="login" method="post" action="${pageContext.request.contextPath}/createProject">
 <div style="margin-left:25%" >
     <div style="margin-right: 25%">
 <div class="w3-container">
@@ -41,6 +42,7 @@
 </div>
 </div>
 </div>
+    </form>
 </form>
 </body>
 </html>
