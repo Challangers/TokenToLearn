@@ -1,4 +1,7 @@
-<%--
+<%@ page import="ovh.challangers.tokentolearn.beans.Group" %>
+<%@ page import="com.sun.corba.se.impl.orbutil.graph.Graph" %>
+<%@ page import="java.util.List" %>
+<%@ page import="ovh.challangers.tokentolearn.beans.Project" %><%--
   Created by IntelliJ IDEA.
   User: cleme
   Date: 10/04/2018
@@ -14,10 +17,11 @@
 </head>
 <body>
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
-    <h3 class="w3-bar-item">Projet : Workshop 2</h3>
-    <a href="#" class="w3-bar-item w3-button">Groupe 1</a>
-    <a href="#" class="w3-bar-item w3-button">Groupe 2</a>
-    <a href="#" class="w3-bar-item w3-button">Groupe 3</a>
+    <% String projectName = (String) pageContext.getRequest().getAttribute("projectName") ; %>
+    <h3 class="w3-bar-item">Projet :<%= projectName %> </h3>
+    <% for (Group g : (List<Group>) pageContext.getRequest().getAttribute("groups")) { %>
+    <a href="#" class="w3-bar-item w3-button"> <%= g.getGroupid() %> </a>
+    <% } %>
     <div  class="w3-container w3-cell-bottom">
         <button class="w3-button w3-circle w3-amber">+</button>
         <button class="w3-button w3-circle w3-black">-</button>
@@ -26,12 +30,10 @@
 </div>
 <div style="margin-left:25%">
 <div class="w3-container">
-<%--<% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>
-    <jsp:param name="tutor" value="<%= ad.getTutorName() %>"/>
-    <jsp:param name="tags" value="<%= ad.getTutorTags() %>"/>
-<% } %>    --%>
+<% Group groupStudent = (Group) pageContext.getRequest().getAttribute("groupStudent");%>
+    <a><%= groupStudent.getGroupid() %></a>
     <div style= "margin-right:25%">
-<h3>Token restant :</h3>
+<h3>Token restant : <%= groupStudent.getToken() %></h3>
         </div>
     <div class="w3-container w3-amber">
     <button onclick="myFunction('Intervenant1')" class="w3-button w3-block w3-black w3-left-align">

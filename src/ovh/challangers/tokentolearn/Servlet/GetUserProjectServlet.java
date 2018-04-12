@@ -55,7 +55,7 @@ public class GetUserProjectServlet extends GenericServlet {
             Student student = (Student) datastore
                     .createQuery(Student.class)
                     .field("user")
-                    .equal(user);
+                    .equal(user).get();
 
             projects = student.getProjects();
         }

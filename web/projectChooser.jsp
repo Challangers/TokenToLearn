@@ -1,5 +1,6 @@
 <%@ page import="ovh.challangers.tokentolearn.beans.Project" %>
-<%@ page import="ovh.challangers.tokentolearn.beans.Tutor" %><%--
+<%@ page import="ovh.challangers.tokentolearn.beans.Tutor" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: cleme
   Date: 11/04/2018
@@ -25,10 +26,11 @@
             <h2>Quel projet voulez-vous rejoindre ?</h2><div class="w3-panel w3-border">
         </div>
     </div>
-   <%-- <% for (Project tutors : (List<Tutor> tutors) pageContext.getRequest().getAttribute("ads")) { %>
-    <jsp:param name="tutor" value="<%= ad.getTutorName() %>"/>
-<% } %> --%>
-
+    <ul class="w3-ul w3-xlarge">
+    <% for (Project p : (List<Project>) pageContext.getRequest().getAttribute("projects")) { %>
+            <li id="projectName" name="projectName"><a href="${pageContext.request.contextPath}/tokenMain?id=<%= p.getId() %>"> <%= p.getId() %> </a> </li>
+    <% } %>
+    </ul>
     <ul class="w3-ul w3-xlarge">
         <li>Projet 1</li>
         <li>Projet 2</li>

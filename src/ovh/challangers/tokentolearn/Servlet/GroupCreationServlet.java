@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Servlet for create a new project
@@ -46,7 +47,7 @@ public class GroupCreationServlet extends GenericServlet {
 
         Group group = new Group();
         group.setGroupid(request.getParameter("name"));
-        group.setGroupStudent(students);
+        group.setGroupStudent(students.stream().map(Student::getUser).collect(Collectors.toList()));
         group.setToken(project.getInitialToken());
         datastore.save(group);
         UpdateOperations<Project> updateProject = DaoFactory.getDatastore().createUpdateOperations(Project.class)

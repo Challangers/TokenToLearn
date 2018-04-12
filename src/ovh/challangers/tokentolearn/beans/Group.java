@@ -4,7 +4,7 @@ import org.mongodb.morphia.annotations.*;
 
 import java.util.List;
 
-@Entity("group")
+@Entity("groups")
 @Indexes(
         @Index(value = "groupId", fields = @Field("groupId"))
 )
@@ -13,7 +13,7 @@ public class Group {
     private String groupId;
 
     @Reference
-    private List<Student> groupStudent;
+    private List<User> groupStudent;
     private int token;
 
     public String getGroupid() {
@@ -32,11 +32,11 @@ public class Group {
         this.token = token;
     }
 
-    public List<Student> getGroupStudent() {
+    public List<User> getGroupStudent() {
         return groupStudent;
     }
 
-    public void setGroupStudent(List<Student> groupStudent) {
+    public void setGroupStudent(List<User> groupStudent) {
         this.groupStudent = groupStudent;
     }
 }

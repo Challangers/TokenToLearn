@@ -1,8 +1,10 @@
 package ovh.challangers.tokentolearn.Servlet;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import ovh.challangers.tokentolearn.beans.*;
 import ovh.challangers.tokentolearn.controlers.database.DaoFactory;
+import ovh.challangers.tokentolearn.misc.ServletUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,15 +24,37 @@ public class TokenMainServlet extends GenericServlet{
         super.doGet(request, response);
         Datastore datastore = DaoFactory.getDatastore();
         User user = (User) request.getSession().getAttribute("user");
+        String projectName = request.getParameter("id");
 
         if(user.getType()== UserType.STUDENT){
             List<Group> groups = datastore
                     .createQuery(Group.class)
                     .field("groupStudent")
-                    .contains(user.getId())
+                    .equal(user)
                     .asList();
 
-            request.setAttribute("groups", groups);
+            Project project = datastore
+                    .createQuery(Project.class)
+                    .field("id")
+                    .equal(projectName)
+                    .get();
+
+            List<Group> allGroup = project.getGroups();
+            Group studentGroup = new Group();
+            for (Group g : allGroup) {
+                for (Group gStudent : groups) {
+                    if (g.getGroupid().equals(gStudent.getGroupid())) {
+                        studentGroup = g;
+                    }
+                }
+            }
+
+            request.setAttribute("groups", allGroup);
+            request.setAttribute("projectName", project.getId());
+            request.setAttribute("groupStudent", studentGroup);
+            request.setAttribute("tutors", project.getTutors());
+            request.setAttribute("tags", project.getTags());
+            request.setAttribute("tags", studentGroup.getToken());
             request.getRequestDispatcher("/tokenMain.jsp").forward(request, response);
             return;
         }
